@@ -94,11 +94,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/LUA/LuaBridge/detail;$(SolutionDir)/LUA/LuaBridge;$(SolutionDir)/LUA/include;$(SolutionDir)/inc/enet;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include\GLFW\include;$(SolutionDir)/enet-1.3.13/include/enet;$(SolutionDir)/lib/Assimp/include;C:\Users\Rich\source\repos\301CR GAME\inc;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include\include\enet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/LSFML-2.5.0-64/include/SFML;$(SolutionDir)/LUA/LuaBridge/detail;$(SolutionDir)/LUA/LuaBridge;$(SolutionDir)/LUA/include;$(SolutionDir)/inc/enet;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include\GLFW\include;$(SolutionDir)/enet-1.3.13/include/enet;$(SolutionDir)/lib/Assimp/include;C:\Users\Rich\source\repos\301CR GAME\inc;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include\include\enet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)/LuaBridge/detail;$(SolutionDir)/LuaBridge;$(SolutionDir)/LUA;$(SolutionDir)/lib;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include;$(SolutionDir)/lib/enet/lib;$(SolutionDir)/lib/Assimp/lib;C:\Users\Rich\source\repos\301CR GAME\lib;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\lib;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include\include\enet;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/LSFML-2.5.0-64/lib;$(SolutionDir)/LuaBridge/detail;$(SolutionDir)/LuaBridge;$(SolutionDir)/LUA;$(SolutionDir)/lib;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include;$(SolutionDir)/lib/enet/lib;$(SolutionDir)/lib/Assimp/lib;C:\Users\Rich\source\repos\301CR GAME\lib;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\lib;C:\Users\Rich\source\repos\301CR GAME\301CR GAME\include\include\enet;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>lua53.lib;winmm.lib;ws2_32.lib;opengl32.lib;glew32.lib;glfw3.lib;assimp-vc140-mt.lib;fmodstudioL64_vc.lib;fmodL64_vc.lib;enet64.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -152,6 +152,7 @@
     <ClInclude Include="mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SplashScreen.h" />
