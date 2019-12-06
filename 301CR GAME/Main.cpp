@@ -1,13 +1,16 @@
 #define STB_IMAGE_IMPLEMENTATION
+#define OPENGL_INCLUDES
+
 
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
-
-
 #include <GL/glew.h>
-//#include <GL/freeglut.h>
+#include <GL/freeglut.h>
+#include <GL/glext.h>
+#include <GL/glew.h>
+
 #include <enet/enet.h>
 #include <fmod_studio.hpp>
 #include <fmod.h>
@@ -40,8 +43,13 @@ extern "C" {
 
 
 #include <LuaBridge.h>
-
-
+#include <time.h>
+#include <GL/GL.h>
+#include <GL/glext.h>
+#include <time.h>
+#include <math.h>
+#include <cstdio>
+#include <fstream>
 
 MainWindw Window;
 
@@ -52,9 +60,12 @@ std::vector<Shader> shaderList;
 
 Camera cam;
 
-
+#define PI 3.1415926535897932384626433832795
 Material shinyMaterial;
 Material dullMaterial;
+
+
+
 
 
 
@@ -81,6 +92,12 @@ static const char* fshader = "shaders/shader.frag";
 
 using namespace luabridge;
 using namespace std;
+
+int oldTimeSinceStart = 0;
+int newTimeSinceStart = 0;
+
+//int initial_time = time(NULL), final_time, frame_count = 0;
+
 
 std::vector<std::string> getElements(const std::string& table, lua_State* L);
 
@@ -236,7 +253,7 @@ int MainWindw::initalise()
 	createCallbacks();
 	glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	//GLEW initalisation for modern extensions
+	//GLEW initalisation 
 	glewExperimental = GL_TRUE;
 
 	if (glewInit() != GLEW_OK)
@@ -328,6 +345,8 @@ void MainWindw::handleMouse(GLFWwindow* window, double xPos, double yPos)
 
 
 
+
+
 int main(bool* keys)
 {
 
@@ -336,26 +355,30 @@ int main(bool* keys)
 		fprintf(stderr, "An error occurred while initializing ENet.\n");
 		return EXIT_FAILURE;
 	}
-	
-
+	ENetAddress address;
 	ENetHost* client;
-	client = enet_host_create(NULL /* create a client host */,
-		1 /* only allow 1 outgoing connection */,
-		2 /* allow up 2 channels to be used, 0 and 1 */,
-		0 /* assume any amount of incoming bandwidth */,
-		0 /* assume any amount of outgoing bandwidth */);
-	if (client == NULL)
-	{
-		fprintf(stderr,
-			"An error occurred while trying to create an ENet client host.\n");
-		exit(EXIT_FAILURE);
-	}
-	
 	ENetPeer* peer;
 	ENetEvent enetEvent;
-	ENetAddress address;
-    ENetHost * server;
 
+	client = enet_host_create(NULL, 1, 2, 0, 0);
+
+	if (client == NULL)
+	{
+		cout << "Client failed to initialise!" << "\n\n";
+	}
+
+	enet_address_set_host(&address, "localhost");
+	address.port = 2222;
+	
+
+	peer = enet_host_connect(client, &address, 2, 0);
+
+	if (peer == NULL) {
+		cout << "No available peers for initializing an ENet connection.\n";
+	}
+
+	
+	
 	client = enet_host_create(NULL, 1, 2, 0, 0);
 
 	if (client == NULL)
@@ -386,6 +409,7 @@ int main(bool* keys)
 		}
 	}
 
+	
 
 
 
@@ -400,18 +424,25 @@ int main(bool* keys)
 	LuaRef w = t["width"];
 	LuaRef h = t["height"];
 
-	std::string titleString = title.cast<std::string>();
+	//std::string titleString = title.cast<std::string>();
 	int width = w.cast<int>();
 	int height = h.cast<int>();
 
+	//std::vector<std::string> elementList;
+	//std::vector<std::string> entityList;
+	
 
+	F = luaL_newstate();
+	luaL_dofile(F, "elements.lua");
+	luaL_openlibs(F);
+	lua_pcall(F, 0, 0, 0);
 
-	std::vector<std::string> elementList;
-	std::vector<std::string> entityList;
+///	elementList = getElements("elementList", F);
 
+	LuaRef elementsRef = getGlobal(F, "elementList");
+	int checker;
 
-
-		Window = MainWindw(640, 480);
+		Window = MainWindw(900, 720);
 		Window.initalise();
 
 
@@ -496,6 +527,18 @@ int main(bool* keys)
 
 		while (!Window.getShouldClose())
 		{
+
+			while (enet_host_service(client, &enetEvent, 0) > 0)
+			{
+				switch (enetEvent.type) {
+
+					
+				case ENET_EVENT_TYPE_RECEIVE:
+					cout << "Packet received!\n";
+					break;
+				}
+			}
+
 			
 			system->update();
 
@@ -549,9 +592,8 @@ int main(bool* keys)
 
 
 			model = glm::mat4{ 1.0 };
-			model = glm::translate(model, glm::vec3(2.0f, -3.0f, -6.0f));
+			model = glm::translate(model, glm::vec3(8.0f, -3.0f, -6.0f));
 			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			shinyMaterial.useMaterial(uniformSpecularIntensity, uniformShininess);
 			Knight.RenderModel();
@@ -569,14 +611,13 @@ int main(bool* keys)
 
 
 
-			//enet_host_destroy(client);
-			atexit(enet_deinitialize);
+
 
 
 		}
 		return 0;
+		enet_host_destroy(client);
 		atexit(enet_deinitialize);
-	    enet_host_destroy(server);
 	}
 
 

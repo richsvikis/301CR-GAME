@@ -11,7 +11,7 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	worldUp = startUp;
 	yaw = startYaw;
 	pitch = startPitch;
-	front = glm::vec3(0.0f, 0.0f, 1.0f);
+	front = glm::vec3(-15.0f, 5.0f, -5.0f);
 
 	movementSpeed = startMovementSpeed;
 	turnSpeed = startTurnSpeed;
@@ -51,14 +51,14 @@ void Camera::mouseControl(GLfloat changeX, GLfloat changeY)
 	yaw += changeX;
 	pitch += changeY;
 
-	if (pitch > 89.0f)
+	if (pitch > 50.0f)
 	{
-		pitch = 89.0f;
+		pitch = 50.0f;
 	}
 
-	if (pitch < -89.0f)
+	if (pitch < -50.0f)
 	{
-		pitch = -89.0f;
+		pitch = -50.0f;
 	}
 
 	if (yaw > 360)
