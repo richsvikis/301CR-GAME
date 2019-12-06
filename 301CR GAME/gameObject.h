@@ -9,7 +9,7 @@
 #pragma comment(lib, "glew32.lib") 
 #endif 
 
-# include <glm/glm.hpp> 
+# include <glm.hpp> 
 # include <map>
 #include "Collider.h"
 #include <map>

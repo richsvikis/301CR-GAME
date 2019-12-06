@@ -1,6 +1,6 @@
 #ifndef __MESH__
 #define __MESH__
-#include <GL/glew.h>
+#include <glew.h>
 
 class Mesh
 {

@@ -6,17 +6,18 @@
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
-#include <GL/glew.h>
-#include <GL/freeglut.h>
-#include <GL/glext.h>
-#include <GL/glew.h>
+#include <glew.h>
+#include <freeglut.h>
+
+#include <glext.h>
+#include <glew.h>
 
 #include <enet/enet.h>
 #include <fmod_studio.hpp>
 #include <fmod.h>
-#include <GLM/glm.hpp>
-#include <GLM/gtc/matrix_transform.hpp>
-#include <GLM/gtc/type_ptr.hpp>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 #include "Val.h"
 #include "gameObject.h"
@@ -45,7 +46,7 @@ extern "C" {
 #include <LuaBridge.h>
 #include <time.h>
 #include <GL/GL.h>
-#include <GL/glext.h>
+#include <glext.h>
 #include <time.h>
 #include <math.h>
 #include <cstdio>

@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 
-#include <GL/glew.h>
+#include <glew.h>
 
 #include "Val.h"
 
